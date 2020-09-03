@@ -5,7 +5,17 @@
 [![License](https://img.shields.io/cocoapods/l/ASAppBar.svg?style=flat)](https://cocoapods.org/pods/ASAppBar)
 [![Platform](https://img.shields.io/cocoapods/p/ASAppBar.svg?style=flat)](https://cocoapods.org/pods/ASAppBar)
 
+Screenshots
+---------
+![ASAppBar Screenshots](asappbar_screenshot.gif)
+
+    
 ## Example
+```swift
+
+import ASAppBar
+
+```
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 

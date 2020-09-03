@@ -1,0 +1,27 @@
+PODS:
+  - ASAppBar (0.1.0)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+
+DEPENDENCIES:
+  - ASAppBar (from `../`)
+  - FBSnapshotTestCase (~> 2.1.4)
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  ASAppBar:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ASAppBar: 8a9bcf74b5fc4a70f009014ad283b847423969c3
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+
+PODFILE CHECKSUM: 78e6a252b56a56e8c3b286db18dbf3418160e8f6
+
+COCOAPODS: 1.9.1

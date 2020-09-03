@@ -1,0 +1,6 @@
+framework module ASAppBar {
+  umbrella header "ASAppBar-umbrella.h"
+
+  export *
+  module * { export * }
+}
