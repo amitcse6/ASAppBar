@@ -30,14 +30,14 @@ class ViewController: UIViewController {
         
         self.appBar
             .setBackgroundColor(UIColor.blue)
-            .setLeftView(0, menuView, ASAMultiplier(leftBarMultiplierH, leftBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)") })
-            .setLeftView(1, titleView, ASAMultiplier(2, 1), appBarIconPadding, false, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView(2, moreView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in appbar.showMore(subView, showMoreProps.background, showMoreProps, {(index, title) in print("title: \(title)")}); print("isOn: \(isOn)")})
-            .setRightView(3, notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView(4, searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); appbar.setMultiplier(1, (isOn ? ASAMultiplier(0, 0) : ASAMultiplier(2, 1))) })
-            .setRightView(5, menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView(6, notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView(7, menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+            .setLeftView("0", menuView, ASAMultiplier(leftBarMultiplierH, leftBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)") })
+            .setLeftView("1", titleView, ASAMultiplier(2, 1), appBarIconPadding, false, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+            .setRightView("2", moreView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in appbar.showMore(subView, showMoreProps.background, showMoreProps, {(index, title) in print("title: \(title)")}); print("isOn: \(isOn)")})
+            .setRightView("3", notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+            .setRightView("4", searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier(0, 0) : ASAMultiplier(2, 1))) })
+            .setRightView("5", menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+            .setRightView("6", notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+            .setRightView("7", menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
     }
     
     func initTitleLabel() -> UILabel {
@@ -61,6 +61,7 @@ class ViewController: UIViewController {
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
             textfield.textColor = UIColor.white
             textfield.backgroundColor = UIColor.clear
+            textfield.font = UIFont.systemFont(ofSize: 12)
         }
         return searchBar
     }

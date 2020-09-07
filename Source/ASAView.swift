@@ -12,7 +12,7 @@ import UIKit
 public class ASAView : UIView {
     public var appBar: ASAppBar?
     
-    public var id: Int = 0
+    public var id: String = ""
     
     public var isActive = false
     public var isAutoEvent = false
@@ -45,7 +45,7 @@ public class ASAView : UIView {
         setup()
     }
     
-    init(_ id: Int, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
+    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
         super.init(frame: CGRect.zero)
         self.appBar = appBar
         self.changableView = changableView
@@ -59,7 +59,7 @@ public class ASAView : UIView {
         setup()
     }
     
-    init(_ id: Int, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ isExpand: Bool, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
+    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ isExpand: Bool, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
         super.init(frame: CGRect.zero)
         self.appBar = appBar
         self.changableView = changableView
@@ -74,7 +74,7 @@ public class ASAView : UIView {
         setup()
     }
     
-    init(_ id: Int, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
+    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
         super.init(frame: CGRect.zero)
         self.appBar = appBar
         self.iconClosure = closure
@@ -89,7 +89,7 @@ public class ASAView : UIView {
         setup()
     }
     
-    init(_ id: Int, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ isAutoEvent: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
+    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ isAutoEvent: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
         super.init(frame: CGRect.zero)
         self.appBar = appBar
         self.iconClosure = closure
@@ -103,6 +103,10 @@ public class ASAView : UIView {
         self.addToBar = addToBar
         self.id = id
         setup()
+    }
+    
+    public func getID() -> String {
+        return id
     }
     
     public func setup() {
@@ -149,10 +153,10 @@ public class ASAView : UIView {
             
             // MARK: - ImageView --->
             currentView?.asa_deactivateAllConstraints()
-            currentView?.topAnchor.constraint(equalTo: container.unsafelyUnwrapped.topAnchor, constant: iconPadding.height).isActive = true
-            currentView?.leftAnchor.constraint(equalTo: container.unsafelyUnwrapped.leftAnchor, constant: iconPadding.width).isActive = true
-            currentView?.rightAnchor.constraint(equalTo: container.unsafelyUnwrapped.rightAnchor, constant: -iconPadding.width).isActive = true
-            currentView?.bottomAnchor.constraint(equalTo: container.unsafelyUnwrapped.bottomAnchor, constant: -iconPadding.height).isActive = true
+            currentView?.topAnchor.constraint(equalTo: container.unsafelyUnwrapped.topAnchor, constant: (multiplier?.v ?? 0 > 0 ? iconPadding.height : 0)).isActive = true
+            currentView?.leftAnchor.constraint(equalTo: container.unsafelyUnwrapped.leftAnchor, constant: (multiplier?.h ?? 0 > 0 ? iconPadding.width : 0)).isActive = true
+            currentView?.rightAnchor.constraint(equalTo: container.unsafelyUnwrapped.rightAnchor, constant: (multiplier?.h ?? 0 > 0 ? -iconPadding.width : -0)).isActive = true
+            currentView?.bottomAnchor.constraint(equalTo: container.unsafelyUnwrapped.bottomAnchor, constant: (multiplier?.v ?? 0 > 0 ? -iconPadding.height : -0)).isActive = true
             currentView?.centerXAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerXAnchor).isActive = true
             currentView?.centerYAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerYAnchor).isActive = true
             // MARK: - ImageView <---
@@ -180,6 +184,7 @@ extension ASAView {
     @objc public func iconEvent(_ sender: ASAppBarGestureRecognizer? = nil) {
         isOn.toggle()
         addCurrentView()
+        setupConstraints()
         appBar?.setupConstraints()
         iconClosure?(appBar.unsafelyUnwrapped, self, isOn)
     }

@@ -59,11 +59,11 @@ extension ASAppBar {
                     // MARK: - WidthAnchor HeightAnchor --->
                     if  iconView.isActive {
                         iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.multiplier?.v ?? 1).isActive = true
-                        if let multiplier = iconView.multiplier, multiplier.hAsWidth {
+                        if let multiplier = iconView.multiplier, multiplier.hAsWidth, !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.widthAnchor, multiplier: multiplier.h).isActive = true
-                        }else if let multiplier = iconView.multiplier {
+                        }else if let multiplier = iconView.multiplier, !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: multiplier.h).isActive = true
-                        }else {
+                        }else if !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true
                         }
                     }else{
@@ -94,20 +94,18 @@ extension ASAppBar {
                     }
                     iconView.centerYAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerYAnchor).isActive = true
                     // MARK: - WidthAnchor HeightAnchor --->
-                    if !iconView.isConstraintExpand {
-                        if  iconView.isActive {
-                            iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.multiplier?.v ?? 1).isActive = true
-                            if let multiplier = iconView.multiplier, multiplier.hAsWidth {
-                                iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.widthAnchor, multiplier: multiplier.h).isActive = true
-                            }else if let multiplier = iconView.multiplier {
-                                iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: multiplier.h).isActive = true
-                            }else {
-                                iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true
-                            }
-                        }else{
-                            iconView.widthAnchor.constraint(equalToConstant: 0).isActive = true
-                            iconView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+                    if  iconView.isActive {
+                        iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.multiplier?.v ?? 1).isActive = true
+                        if let multiplier = iconView.multiplier, multiplier.hAsWidth, !iconView.isConstraintExpand {
+                            iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.widthAnchor, multiplier: multiplier.h).isActive = true
+                        }else if let multiplier = iconView.multiplier, !iconView.isConstraintExpand {
+                            iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: multiplier.h).isActive = true
+                        }else if !iconView.isConstraintExpand {
+                            iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true
                         }
+                    }else{
+                        iconView.widthAnchor.constraint(equalToConstant: 0).isActive = true
+                        iconView.heightAnchor.constraint(equalToConstant: 0).isActive = true
                     }
                     // MARK: - WidthAnchor HeightAnchor <---
                 }

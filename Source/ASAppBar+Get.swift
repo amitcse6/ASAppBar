@@ -10,7 +10,11 @@ import Foundation
 import UIKit
 
 extension ASAppBar {
-    func getCornerRadius() -> CGFloat {
+    public func getCornerRadius() -> CGFloat {
         return (container?.bounds.size.height ?? 0 - padding*2) * 0.5
+    }
+    
+    public func getASAView(_ id: String) -> ASAView? {
+        return views?.filter({ $0.id == id }).first
     }
 }
