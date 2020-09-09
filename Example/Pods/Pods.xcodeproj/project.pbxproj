@@ -43,6 +43,7 @@
 		2812CAA62500DB0A00CC9921 /* ASADropDownBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2812CA8B2500DB0A00CC9921 /* ASADropDownBox.swift */; };
 		2812CAA82500DB6E00CC9921 /* ASAppBar+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2812CAA72500DB6E00CC9921 /* ASAppBar+UIView.swift */; };
 		2812CAAA2500DBDF00CC9921 /* ASAppGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2812CAA92500DBDF00CC9921 /* ASAppGestureRecognizer.swift */; };
+		28A122902508952F00E80DC7 /* ASAProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A1228F2508952F00E80DC7 /* ASAProps.swift */; };
 		298443E9DE40469276FAC70C854975EC /* ASAppBar-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 8342F69BF91EEFC56555B8B0A5AF179E /* ASAppBar-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2DCFF0CE0BD295F1D46D3247F36B192C /* UIImage+Compare.m in Sources */ = {isa = PBXBuildFile; fileRef = 235A78CFFA6D8B8D86CACD733531CB13 /* UIImage+Compare.m */; };
 		3447049B6278C79110308855E6D88A65 /* Pods-ASAppBar_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C39FDF183A582467C23FA0CD99DB822 /* Pods-ASAppBar_Example-dummy.m */; };
@@ -131,6 +132,7 @@
 		2812CAA72500DB6E00CC9921 /* ASAppBar+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASAppBar+UIView.swift"; sourceTree = "<group>"; };
 		2812CAA92500DBDF00CC9921 /* ASAppGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAppGestureRecognizer.swift; sourceTree = "<group>"; };
 		284833D18C244D2B42966B6EE425AA59 /* UIImage+Snapshot.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Snapshot.h"; path = "FBSnapshotTestCase/Categories/UIImage+Snapshot.h"; sourceTree = "<group>"; };
+		28A1228F2508952F00E80DC7 /* ASAProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASAProps.swift; sourceTree = "<group>"; };
 		3BB99B8F658FD43FFBF7950C46593E84 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		3F0D66CF296ABBC57EC4D0452397E235 /* SwiftSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftSupport.swift; path = FBSnapshotTestCase/SwiftSupport.swift; sourceTree = "<group>"; };
 		3FCAA9C30AF7BFE1F23D0322039929F3 /* Pods-ASAppBar_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ASAppBar_Example-Info.plist"; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				2812CA8B2500DB0A00CC9921 /* ASADropDownBox.swift */,
 				2812CAA72500DB6E00CC9921 /* ASAppBar+UIView.swift */,
 				2812CAA92500DBDF00CC9921 /* ASAppGestureRecognizer.swift */,
+				28A1228F2508952F00E80DC7 /* ASAProps.swift */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -660,6 +663,7 @@
 				2812CA952500DB0A00CC9921 /* ASADropDownItem.swift in Sources */,
 				2812CA9D2500DB0A00CC9921 /* ASAAlignType.swift in Sources */,
 				2812CAA12500DB0A00CC9921 /* ASAppBar+Constraint.swift in Sources */,
+				28A122902508952F00E80DC7 /* ASAProps.swift in Sources */,
 				2812CA8E2500DB0A00CC9921 /* ASAppBar+Alis.swift in Sources */,
 				BBDCF9D4AFB65A13EF86E2B1CB35EA5E /* ASAppBar-dummy.m in Sources */,
 				2812CA9B2500DB0A00CC9921 /* ASAKeyboardGesture.swift in Sources */,

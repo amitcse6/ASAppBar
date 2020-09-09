@@ -15,19 +15,14 @@ public class ASAView : UIView {
     public var id: String = ""
     
     public var isActive = false
-    public var isAutoEvent = false
     public var isOn = false
     public var isExpand = false
     public var isConstraintExpand = false
     public var addToBar = false
     
-    public var multiplier: ASAMultiplier?
-    
     public var alignType = ASAAlignType.left
     
     public var container: UIView?
-    
-    public var iconPadding: CGSize = CGSize.zero
     
     public var changableView: ASAChangableView?
     
@@ -45,61 +40,27 @@ public class ASAView : UIView {
         setup()
     }
     
-    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
+    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
         super.init(frame: CGRect.zero)
         self.appBar = appBar
         self.changableView = changableView
         self.isActive = true
-        self.multiplier = multiplier
         self.iconClosure = closure
         self.alignType = alignType
-        self.iconPadding = iconPadding
         self.addToBar = addToBar
         self.id = id
         setup()
     }
     
-    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ isExpand: Bool, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
+    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ addToBar: Bool, _ defaultType: Bool, _ isExpand: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
         super.init(frame: CGRect.zero)
         self.appBar = appBar
         self.changableView = changableView
         self.isActive = true
-        self.multiplier = multiplier
+        self.isOn = defaultType
         self.iconClosure = closure
         self.alignType = alignType
-        self.iconPadding = iconPadding
         self.isExpand = isExpand
-        self.addToBar = addToBar
-        self.id = id
-        setup()
-    }
-    
-    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
-        super.init(frame: CGRect.zero)
-        self.appBar = appBar
-        self.iconClosure = closure
-        self.isActive = true
-        self.multiplier = multiplier
-        self.isOn = defaultType
-        self.changableView = changableView
-        self.alignType = alignType
-        self.iconPadding = iconPadding
-        self.addToBar = addToBar
-        self.id = id
-        setup()
-    }
-    
-    init(_ id: String, _ appBar: ASAppBar?, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ isAutoEvent: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?, _ alignType: ASAAlignType = .left) {
-        super.init(frame: CGRect.zero)
-        self.appBar = appBar
-        self.iconClosure = closure
-        self.isActive = true
-        self.isAutoEvent = isAutoEvent
-        self.multiplier = multiplier
-        self.isOn = defaultType
-        self.changableView = changableView
-        self.alignType = alignType
-        self.iconPadding = iconPadding
         self.addToBar = addToBar
         self.id = id
         setup()
@@ -124,6 +85,13 @@ public class ASAView : UIView {
         // MARK: - Normal --->
         addCurrentView()
         // MARK: - Normal <---
+    }
+    
+    func addCurrentView() {
+        removeCurrentView()
+        currentView = (isOn ? changableView?.selected?() : changableView?.normal?())
+        isConstraintExpand = (isExpand && isOn) ? true : false
+        container?.addSubview(currentView.unsafelyUnwrapped)
     }
     
     public func setupUIElements() {
@@ -153,23 +121,16 @@ public class ASAView : UIView {
             
             // MARK: - ImageView --->
             currentView?.asa_deactivateAllConstraints()
-            currentView?.topAnchor.constraint(equalTo: container.unsafelyUnwrapped.topAnchor, constant: (multiplier?.v ?? 0 > 0 ? iconPadding.height : 0)).isActive = true
-            currentView?.leftAnchor.constraint(equalTo: container.unsafelyUnwrapped.leftAnchor, constant: (multiplier?.h ?? 0 > 0 ? iconPadding.width : 0)).isActive = true
-            currentView?.rightAnchor.constraint(equalTo: container.unsafelyUnwrapped.rightAnchor, constant: (multiplier?.h ?? 0 > 0 ? -iconPadding.width : -0)).isActive = true
-            currentView?.bottomAnchor.constraint(equalTo: container.unsafelyUnwrapped.bottomAnchor, constant: (multiplier?.v ?? 0 > 0 ? -iconPadding.height : -0)).isActive = true
+            currentView?.topAnchor.constraint(equalTo: container.unsafelyUnwrapped.topAnchor, constant: (props?.multiplier?.v ?? 0 > 0 ? props?.iconPadding?.height ?? 0 : 0)).isActive = true
+            currentView?.leftAnchor.constraint(equalTo: container.unsafelyUnwrapped.leftAnchor, constant: (props?.multiplier?.h ?? 0 > 0 ? props?.iconPadding?.width ?? 0 : 0)).isActive = true
+            currentView?.rightAnchor.constraint(equalTo: container.unsafelyUnwrapped.rightAnchor, constant: (props?.multiplier?.h ?? 0 > 0 ? -(props?.iconPadding?.width ?? 0) : -0)).isActive = true
+            currentView?.bottomAnchor.constraint(equalTo: container.unsafelyUnwrapped.bottomAnchor, constant: (props?.multiplier?.v ?? 0 > 0 ? -(props?.iconPadding?.height ?? 0) : -0)).isActive = true
             currentView?.centerXAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerXAnchor).isActive = true
             currentView?.centerYAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerYAnchor).isActive = true
             // MARK: - ImageView <---
         } else {
             // Fallback on earlier versions
         }
-    }
-    
-    func addCurrentView() {
-        removeCurrentView()
-        currentView = (isOn ? changableView?.selected?() : changableView?.normal?())
-        isConstraintExpand = (isExpand && isOn) ? true : false
-        container?.addSubview(currentView.unsafelyUnwrapped)
     }
     
     func removeCurrentView() {
@@ -181,8 +142,13 @@ public class ASAView : UIView {
 }
 
 extension ASAView {
+    public var props: ASAProps? {
+        return (isOn ? changableView?.selectedProps : changableView?.normalProps)
+    }
+    
     @objc public func iconEvent(_ sender: ASAppBarGestureRecognizer? = nil) {
         isOn.toggle()
+        print("isOn: \(isOn)")
         addCurrentView()
         setupConstraints()
         appBar?.setupConstraints()

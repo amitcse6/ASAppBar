@@ -38,6 +38,13 @@ extension ASAppBar {
     }
     
     @discardableResult
+    public func setBackgroundColorAll(_ color: UIColor) -> ASAppBar {
+        self.backgroundColor = color
+        self.container?.backgroundColor = color
+        return self
+    }
+    
+    @discardableResult
     public func setBackgroundColor(_ color: UIColor) -> ASAppBar {
         self.backgroundColor = color
         return self
@@ -64,16 +71,23 @@ extension ASAppBar {
     }
     
     @discardableResult
-    public func setMultiplier(_ id: String, _ multiplier: ASAMultiplier?) -> ASAppBar {
-        let iconView = views?.filter({ $0.id == id }).first
-        iconView?.multiplier = multiplier
+    public func setBoxPadding(_ boxPadding: CGSize) -> ASAppBar {
+        self.boxPadding = boxPadding
         setupConstraints()
         return self
     }
     
+    @discardableResult
+    public func setMultiplier(_ id: String, _ multiplier: ASAMultiplier?) -> ASAppBar {
+        let iconView = views?.filter({ $0.id == id }).first
+        iconView?.props?.multiplier = multiplier
+        setupConstraints()
+        return self
+    }
+
     func randomString(length: Int) -> String {
-      let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-      return String((0..<length).map{ _ in letters.randomElement()! })
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
     }
     
     public func getValidId(_ id: String?) -> String {
@@ -82,12 +96,9 @@ extension ASAppBar {
         }
         return randomString(length: 10)
     }
-}
-
-// MARK: - LEFT VIEW
-extension ASAppBar {
+    
     @discardableResult
-    public func setLeftView(_ id: String, _ changableView: ASAChangableView?) -> ASAppBar {
+    public func setChangableView(_ id: String, _ changableView: ASAChangableView?) -> ASAppBar {
         let iconView = views?.filter({ $0.id == id }).first
         iconView?.removeCurrentView()
         iconView?.changableView = changableView
@@ -97,74 +108,8 @@ extension ASAppBar {
     }
     
     @discardableResult
-    public func setLeftView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, iconPadding, addToBar, closure, .left)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-    
-    @discardableResult
-    public func setLeftView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier? = nil, _ defaultType: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, defaultType, iconPadding, addToBar, closure, .left)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-    
-    @discardableResult
-    public func setLeftView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ isExpand: Bool, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, iconPadding, isExpand, addToBar, closure, .left)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-}
-
-// MARK: - RIGHT VIEW
-extension ASAppBar {
-    @discardableResult
-    public func setRightView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, iconPadding, addToBar, closure, .right)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-    
-    @discardableResult
-    public func setRightView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ isExpand: Bool, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, iconPadding, isExpand, addToBar, closure, .right)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-    
-    @discardableResult
-    public func setRightView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, defaultType, iconPadding, addToBar, closure, .right)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-    
-    @discardableResult
-    public func setRightView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ defaultType: Bool, _ isAutoEvent: Bool, _ iconPadding: CGSize, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, defaultType, isAutoEvent, iconPadding, addToBar, closure, .right)
-        container?.addSubview(iconView)
-        views?.append(iconView)
-        setupConstraints()
-        return self
-    }
-    
-    @discardableResult
-    public func setCenterView(_ id: String? = nil, _ changableView: ASAChangableView?, _ multiplier: ASAMultiplier?, _ iconPadding: CGSize, _ isExpand: Bool, _ addToBar: Bool, _ closure: ASAViewClosure?) -> ASAppBar {
-        let iconView = ASAView(getValidId(id), self, changableView, multiplier, iconPadding, isExpand, addToBar, closure, .center)
+    public func setSideView(_ id: String? = nil, _ changableView: ASAChangableView?, _ addToBar: Bool, _ defaultType: Bool, _ isExpand: Bool, _ alignType: ASAAlignType?, _ closure: ASAViewClosure?) -> ASAppBar {
+        let iconView = ASAView(getValidId(id), self, changableView, addToBar, defaultType, isExpand, closure, alignType ?? .left)
         container?.addSubview(iconView)
         views?.append(iconView)
         setupConstraints()

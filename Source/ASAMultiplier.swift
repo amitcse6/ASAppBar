@@ -25,3 +25,9 @@ public class ASAMultiplier {
         self.hAsWidth = hAsWidth
     }
 }
+
+extension ASAMultiplier {
+    public static var zero: ASAMultiplier {
+        return ASAMultiplier(0, 0, false)
+    }
+}

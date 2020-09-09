@@ -9,15 +9,24 @@
 import Foundation
 import UIKit
 
+extension UIColor {
+    static var asa_random: UIColor {
+        return .init(hue: .random(in: 0...1), saturation: 1, brightness: 1, alpha: 1)
+    }
+}
+
 extension ASAppBar {
     public func setupConstraints() {
         if #available(iOS 9.0, *) {
             // MARK: - Container --->
             container?.asa_deactivateAllConstraints()
-            container?.topAnchor.constraint(equalTo: topAnchor, constant: padding0).isActive = true
+            container?.topAnchor.constraint(equalTo: topAnchor, constant: boxPadding.height).isActive = true
             container?.leftAnchor.constraint(equalTo: leftAnchor, constant: padding0).isActive = true
             container?.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding0).isActive = true
-            container?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding0).isActive = true
+            container?.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -boxPadding.height).isActive = true
+            container?.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+            container?.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+            
             // MARK: - Container <---
             
             let barViews = views?.filter({$0.addToBar})
@@ -44,7 +53,7 @@ extension ASAppBar {
                     iconView.asa_deactivateAllConstraints()
                     iconView.setupConstraints()
                     if index == 0 {
-                        iconView.leftAnchor.constraint(equalTo: container.unsafelyUnwrapped.leftAnchor, constant: boxHorizontalPadding).isActive = true
+                        iconView.leftAnchor.constraint(equalTo: container.unsafelyUnwrapped.leftAnchor, constant: boxPadding.width).isActive = true
                     }else {
                         iconView.leftAnchor.constraint(equalTo: views[index-1].rightAnchor, constant: padding0).isActive = true
                     }
@@ -58,10 +67,10 @@ extension ASAppBar {
                     iconView.centerYAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerYAnchor).isActive = true
                     // MARK: - WidthAnchor HeightAnchor --->
                     if  iconView.isActive {
-                        iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.multiplier?.v ?? 1).isActive = true
-                        if let multiplier = iconView.multiplier, multiplier.hAsWidth, !iconView.isConstraintExpand {
+                        iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.props?.multiplier?.v ?? 1).isActive = true
+                        if let multiplier = iconView.props?.multiplier, multiplier.hAsWidth, !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.widthAnchor, multiplier: multiplier.h).isActive = true
-                        }else if let multiplier = iconView.multiplier, !iconView.isConstraintExpand {
+                        }else if let multiplier = iconView.props?.multiplier, !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: multiplier.h).isActive = true
                         }else if !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true
@@ -81,7 +90,7 @@ extension ASAppBar {
                     iconView.asa_deactivateAllConstraints()
                     iconView.setupConstraints()
                     if index == 0 {
-                        iconView.rightAnchor.constraint(equalTo: container.unsafelyUnwrapped.rightAnchor, constant: -boxHorizontalPadding).isActive = true
+                        iconView.rightAnchor.constraint(equalTo: container.unsafelyUnwrapped.rightAnchor, constant: -boxPadding.width).isActive = true
                     }else {
                         iconView.rightAnchor.constraint(equalTo: views[index-1].leftAnchor, constant: -padding0).isActive = true
                     }
@@ -95,10 +104,10 @@ extension ASAppBar {
                     iconView.centerYAnchor.constraint(equalTo: container.unsafelyUnwrapped.centerYAnchor).isActive = true
                     // MARK: - WidthAnchor HeightAnchor --->
                     if  iconView.isActive {
-                        iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.multiplier?.v ?? 1).isActive = true
-                        if let multiplier = iconView.multiplier, multiplier.hAsWidth, !iconView.isConstraintExpand {
+                        iconView.heightAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: iconView.props?.multiplier?.v ?? 1).isActive = true
+                        if let multiplier = iconView.props?.multiplier, multiplier.hAsWidth, !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.widthAnchor, multiplier: multiplier.h).isActive = true
-                        }else if let multiplier = iconView.multiplier, !iconView.isConstraintExpand {
+                        }else if let multiplier = iconView.props?.multiplier, !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: container.unsafelyUnwrapped.heightAnchor, multiplier: multiplier.h).isActive = true
                         }else if !iconView.isConstraintExpand {
                             iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true

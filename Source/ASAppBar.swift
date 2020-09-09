@@ -16,8 +16,7 @@ public class ASAppBar: UIView {
     
     final var type: ASAppBarType = .classic
     
-    final var boxHorizontalPadding: CGFloat = 20
-    final var boxVerticalPadding: CGFloat = 8
+    final var boxPadding: CGSize = CGSize(width: 8, height: 8)
     // MARK: - Const --->
     final let padding0: CGFloat = 0
     final let padding2: CGFloat = 2

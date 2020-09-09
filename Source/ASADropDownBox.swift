@@ -55,11 +55,11 @@ public class ASADropDownBox: UIView {
         self.myScrollView?.backgroundColor = .clear
         self.myScrollView?.showsHorizontalScrollIndicator = false
         self.myScrollView?.showsVerticalScrollIndicator = false
-        self.myScrollView?.bounces=true
-        self.myScrollView?.isScrollEnabled=true
-        self.myScrollView?.bounces = true
-        self.myScrollView?.bouncesZoom = true
-        self.myScrollView?.alwaysBounceVertical = true
+        self.myScrollView?.isScrollEnabled = true
+        self.myScrollView?.bounces = false
+        self.myScrollView?.bounces = false
+        self.myScrollView?.bouncesZoom = false
+        self.myScrollView?.alwaysBounceVertical = false
         
         self.myStackView = UIStackView()
         self.myScrollView?.addSubview(self.myStackView.unsafelyUnwrapped)
