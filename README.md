@@ -22,65 +22,50 @@ import ASAppBar
 
 ## Variables
 ```swift
-let appBarIconPadding = CGSize(width: 10, height: 10)
-let leftBarMultiplierH: CGFloat = 0.6
-let leftBarMultiplierV: CGFloat = 0.6
-let rightBarMultiplierH: CGFloat = 0.6
-let rightBarMultiplierV: CGFloat = 0.6
+static let boxPadding = CGSize(width: 10, height: 0)
+static var barTitleProps: ASAProps {ASAProps(ASAMultiplier(5.0, 0.6), CGSize(width: 5, height: 5))}
+static var barSearchProps: ASAProps {ASAProps(ASAMultiplier(0.6, 0.6), CGSize(width: 5, height: 0))}
+static var barProps: ASAProps {ASAProps(ASAMultiplier(0.6, 0.6), CGSize(width: 5, height: 5))}
 
-let titleView = ASAChangableView("App Name", {self.initTitleLabel()},{self.initTitleLabel()})
-let menuView = ASAChangableView("Menu", {UIImageView(image: UIImage(named: "menu"))},{UIImageView(image: UIImage(named: "menu"))})
-let moreView = ASAChangableView("More", {UIImageView(image: UIImage(named: "moreIcon"))},{UIImageView(image: UIImage(named: "moreIcon"))})
-let notificationView = ASAChangableView("Notification", {UIImageView(image: UIImage(named: "notification"))},{UIImageView(image: UIImage(named: "notification"))})
-let searchView = ASAChangableView("Search", {UIImageView(image: UIImage(named: "search"))},{self.initSearchBar()})
+let title = ASAChangableView("App Name", {self.initTitleLabel("App Name 1")}, {self.initTitleLabel("App Name 2")}, ViewController.barTitleProps, ViewController.barTitleProps)
+
+let menu = ASAChangableView("Menu", {UIImageView(image: UIImage(named: "menu"))}, {UIImageView(image: UIImage(named: "menu"))}, ViewController.barProps, ViewController.barProps)
+
+let more = ASAChangableView("More", {UIImageView(image: UIImage(named: "moreIcon"))}, {UIImageView(image: UIImage(named: "moreIcon"))}, ViewController.barProps, ViewController.barProps)
+
+let notifi = ASAChangableView("Notification", {UIImageView(image: UIImage(named: "notification"))},{UIImageView(image: UIImage(named: "notification"))}, ViewController.barProps, ViewController.barProps)
+
+let search = ASAChangableView("Search", {UIImageView(image: UIImage(named: "search"))}, {self.initSearchBar()}, ViewController.barProps, ViewController.barSearchProps)
+
 let showMoreProps = ASADropDownProp(UIFont.systemFont(ofSize: 15), UIColor.black, UIColor.lightGray, UIColor.lightGray)
 ```
 
-## Set Left Item
+## Set Background Color & Box Padding
 ```swift
-// id(String?), changableView(ASAChangableView?), multiplier(ASAMultiplier?), iconPadding(CGSize), addToBar(Bool), closure(ASAViewClosure?)
-// 'id' is for unique identification
-// through 'changableView', you can change two views by one-click event
-// through 'multiplier', you can set item size ratio with respect to parents view
-// through 'iconPadding', you can set item subview size ratio with respect to parents view
-// through 'addToBar', you can set it into appbar(Note: addToBar=false for add to more dropdown section)
-// through 'closure', you can set event
 self.appBar
 .setBackgroundColor(UIColor.blue)
-.setLeftView("0", menuView, ASAMultiplier(leftBarMultiplierH, leftBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)") })
-.setLeftView("1", titleView, ASAMultiplier(2, 1), appBarIconPadding, false, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+.setBoxPadding(ViewController.boxPadding)
 ```
 
-## Set Right Item
+## Set Left Side Menu View
 ```swift
 self.appBar
-.setRightView("3", notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-.setRightView("4", searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); appbar.setMultiplier(1, (isOn ? ASAMultiplier(0, 0) : ASAMultiplier(2, 1))) })
-.setRightView("5", menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-.setRightView("6", notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-.setRightView("7", menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+.setSideView("0", menu, true, false, false, .left, { (appbar, subView, isOn) in print("\(isOn)") })
 ```
 
-## Set Expandable Right Item
+## Set Left Side Title View
 ```swift
 self.appBar
-.setRightView("4", searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier(0, 0) : ASAMultiplier(2, 1))) })
+.setSideView("1", title, true, false, false, .left, { (appbar, subView, isOn) in print("\(isOn)")})
 ```
 
-## Set Expandable Right Item
+## Set Right Expandable View And It's Event Change Other Size By Id
 ```swift
 self.appBar
-.setRightView("4", searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); })
+.setSideView("4", search, true, false, true, .right, { (appbar, subView, isOn) in print("\(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier.zero : ViewController.barTitleProps.multiplier)) })
 ```
 
-## Set Right Item And It's Event Change Other Size By Id
-```swift
-self.appBar
-.setRightView("4", searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier(0, 0) : ASAMultiplier(2, 1))) })
-```
-
-
-## ViewController Code Snippet  
+## Full Code Snippet
 ```swift
 
 import UIKit
@@ -89,37 +74,41 @@ import ASAppBar
 class ViewController: UIViewController {
     @IBOutlet weak var appBar: ASAppBarClassic!
     
+    static let boxPadding = CGSize(width: 10, height: 0)
+    static var barTitleProps: ASAProps {ASAProps(ASAMultiplier(5.0, 0.6), CGSize(width: 5, height: 5))}
+    static var barSearchProps: ASAProps {ASAProps(ASAMultiplier(0.6, 0.6), CGSize(width: 5, height: 0))}
+    static var barProps: ASAProps {ASAProps(ASAMultiplier(0.6, 0.6), CGSize(width: 5, height: 5))}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appBarIconPadding = CGSize(width: 10, height: 10)
-        let leftBarMultiplierH: CGFloat = 0.6
-        let leftBarMultiplierV: CGFloat = 0.6
-        let rightBarMultiplierH: CGFloat = 0.6
-        let rightBarMultiplierV: CGFloat = 0.6
+        let title = ASAChangableView("App Name", {self.initTitleLabel("App Name 1")}, {self.initTitleLabel("App Name 2")}, ViewController.barTitleProps, ViewController.barTitleProps)
         
-        let titleView = ASAChangableView("App Name", {self.initTitleLabel()},{self.initTitleLabel()})
-        let menuView = ASAChangableView("Menu", {UIImageView(image: UIImage(named: "menu"))},{UIImageView(image: UIImage(named: "menu"))})
-        let moreView = ASAChangableView("More", {UIImageView(image: UIImage(named: "moreIcon"))},{UIImageView(image: UIImage(named: "moreIcon"))})
-        let notificationView = ASAChangableView("Notification", {UIImageView(image: UIImage(named: "notification"))},{UIImageView(image: UIImage(named: "notification"))})
-        let searchView = ASAChangableView("Search", {UIImageView(image: UIImage(named: "search"))},{self.initSearchBar()})
+        let menu = ASAChangableView("Menu", {UIImageView(image: UIImage(named: "menu"))}, {UIImageView(image: UIImage(named: "menu"))}, ViewController.barProps, ViewController.barProps)
+        
+        let more = ASAChangableView("More", {UIImageView(image: UIImage(named: "moreIcon"))}, {UIImageView(image: UIImage(named: "moreIcon"))}, ViewController.barProps, ViewController.barProps)
+        
+        let notifi = ASAChangableView("Notification", {UIImageView(image: UIImage(named: "notification"))},{UIImageView(image: UIImage(named: "notification"))}, ViewController.barProps, ViewController.barProps)
+        
+        let search = ASAChangableView("Search", {UIImageView(image: UIImage(named: "search"))}, {self.initSearchBar()}, ViewController.barProps, ViewController.barSearchProps)
+        
         let showMoreProps = ASADropDownProp(UIFont.systemFont(ofSize: 15), UIColor.black, UIColor.lightGray, UIColor.lightGray)
         
         self.appBar
-            .setBackgroundColor(UIColor.blue)
-            .setLeftView("0", menuView, ASAMultiplier(leftBarMultiplierH, leftBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)") })
-            .setLeftView("1", titleView, ASAMultiplier(2, 1), appBarIconPadding, false, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView("2", moreView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in appbar.showMore(subView, showMoreProps.background, showMoreProps, {(index, title) in print("title: \(title)")}); print("isOn: \(isOn)")})
-            .setRightView("3", notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView("4", searchView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, true, true, { (appbar, subView, isOn) in print("isOn: \(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier(0, 0) : ASAMultiplier(2, 1))) })
-            .setRightView("5", menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView("6", notificationView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
-            .setRightView("7", menuView, ASAMultiplier(rightBarMultiplierH, rightBarMultiplierV), appBarIconPadding, false, { (appbar, subView, isOn) in print("isOn: \(isOn)")})
+            .setBackgroundColorAll(UIColor.blue)
+            .setBoxPadding(ViewController.boxPadding)
+            .setSideView("0", menu, true, false, false, .left, { (appbar, subView, isOn) in print("\(isOn)") })
+            .setSideView("1", title, true, false, false, .left, { (appbar, subView, isOn) in print("\(isOn)")})
+            .setSideView("2", more, true, false, false, .right, { (appbar, subView, isOn) in appbar.showMore(subView, showMoreProps.background, showMoreProps, {(index, title) in print("title: \(title)")}); print("\(isOn)")})
+            .setSideView("3", notifi, true, false, false, .right, { (appbar, subView, isOn) in print("\(isOn)")})
+            .setSideView("4", search, true, false, true, .right, { (appbar, subView, isOn) in print("\(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier.zero : ViewController.barTitleProps.multiplier)) })
+            .setSideView("5", notifi, false, false, false, .right, { (appbar, subView, isOn) in print("\(isOn)")})
+            .setSideView("6", more, false, false, false, .right, { (appbar, subView, isOn) in print("\(isOn)")})
     }
     
-    func initTitleLabel() -> UILabel {
+    func initTitleLabel(_ text: String? = nil) -> UILabel {
         let label = UILabel()
-        label.text = "App Name"
+        label.text = text ?? ""
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
