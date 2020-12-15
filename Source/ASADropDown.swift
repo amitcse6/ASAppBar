@@ -31,10 +31,10 @@ public class ASADropDown: NSObject {
     internal var withDuration: TimeInterval = 3
     internal var delay: TimeInterval = 1
     
-    private func openDropDown(_ items: [ASADropDownItem], _ backgroundColor: UIColor?, _ prop: ASADropDownProp?, _ selectionAction: @escaping ASADropDownSelectionClosure, _ anchorView: UIView?, _ size: CGSize?) {
+    private func openDropDown(_ items: [ASADropDownItem], _ backgroundColor: UIColor?, _ prop: ASADropDownProp?, _ selectionAction: @escaping ASADropDownSelectionClosure, _ anchorView: UIView?, _ size: CGSize?, _ padding: CGPoint?) {
         if #available(iOS 11.0, *) {
             if let viewController = ASADropDown.topMostVC {
-                dropDownView = ASADropDownViewDefault(anchorView, items, prop, size)
+                dropDownView = ASADropDownViewDefault(anchorView, items, prop, size, padding)
                 viewController.view.addSubview(dropDownView.unsafelyUnwrapped)
                 dropDownView?.boxView?.backgroundColor = backgroundColor
                 dropDownView?.setEvent(selectionAction)
@@ -87,10 +87,10 @@ public class ASADropDown: NSObject {
 
 @available(iOS 9.0, *)
 extension ASADropDown {
-    public static func openDropDown(_ items: [ASADropDownItem], _ backgroundColor: UIColor?, _ prop: ASADropDownProp?, _ selectionAction: @escaping ASADropDownSelectionClosure, _ anchorView: UIView?, _ size: CGSize?) {
+    public static func openDropDown(_ items: [ASADropDownItem], _ backgroundColor: UIColor?, _ prop: ASADropDownProp?, _ selectionAction: @escaping ASADropDownSelectionClosure, _ anchorView: UIView?, _ size: CGSize?, _ padding: CGPoint?) {
         ASADropDown.dismiss()
         if let dropDown = ASADropDown.shared() {
-            dropDown.openDropDown(items, backgroundColor, prop, selectionAction, anchorView, size)
+            dropDown.openDropDown(items, backgroundColor, prop, selectionAction, anchorView, size, padding)
         }
     }
     

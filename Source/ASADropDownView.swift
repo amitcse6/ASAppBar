@@ -21,6 +21,7 @@ public class ASADropDownView: UIView {
     internal var boxView: UIView?
     internal var bropBox: ASADropDownBox?
     internal var PADDING: CGFloat = 8
+    internal var boxPadding: CGPoint = CGPoint.zero
     internal var iscCornerRadius = true
     internal var containerSize: CGSize?
     

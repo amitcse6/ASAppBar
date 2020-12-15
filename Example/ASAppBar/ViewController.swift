@@ -37,7 +37,12 @@ class ViewController: UIViewController {
             .setBoxPadding(ViewController.boxPadding)
             .setSideView("0", menu, true, false, false, .left, { (appbar, subView, isOn) in print("\(isOn)") })
             .setSideView("1", title, true, false, false, .left, { (appbar, subView, isOn) in print("\(isOn)")})
-            .setSideView("2", more, true, false, false, .right, { (appbar, subView, isOn) in appbar.showMore(subView, showMoreProps.background, showMoreProps, {(index, title) in print("title: \(title)")}); print("\(isOn)")})
+            .setSideView("2", more, true, false, false, .right, { (appbar, subView, isOn) in
+                appbar.showMore(subView, showMoreProps.background, showMoreProps, {(index, title) in
+                    print("title: \(title)")
+                }, CGPoint(x: 5, y: 20));
+                print("\(isOn)")
+            })
             .setSideView("3", notifi, true, false, false, .right, { (appbar, subView, isOn) in print("\(isOn)")})
             .setSideView("4", search, true, false, true, .right, { (appbar, subView, isOn) in print("\(isOn)"); appbar.setMultiplier("1", (isOn ? ASAMultiplier.zero : ViewController.barTitleProps.multiplier)) })
             .setSideView("5", notifi, false, false, false, .right, { (appbar, subView, isOn) in print("\(isOn)")})

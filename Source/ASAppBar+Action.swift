@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 
 extension ASAppBar {
-    public func showMore(_ view: UIView, _ backgroundColor: UIColor?, _ props: ASADropDownProp, _ selectionAction: @escaping ASADropDownSelectionClosure) {
+    public func showMore(_ view: UIView, _ backgroundColor: UIColor?, _ props: ASADropDownProp, _ selectionAction: @escaping ASADropDownSelectionClosure, _ padding: CGPoint?) {
         if let moreViews = views?.filter({!$0.addToBar}) {
             let items = moreViews.map({return ASADropDownItem(key: "key_\($0)", title: $0.changableView?.title, $0.changableView)})
             if #available(iOS 9.0, *) {
                 ASADropDown.openDropDown(items, backgroundColor, props, { (index, title) in
                     selectionAction(index, title)
-                }, view, nil)
+                }, view, nil, padding)
             } else {
                 // Fallback on earlier versions
             }
